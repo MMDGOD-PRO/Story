@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>داستان محمد — زینب</title>
+<style>
+  body{
+    font-family:Tahoma, "Segoe UI", sans-serif;
+    background:linear-gradient(180deg,#f6f7fb,#eaeaff);
+    margin:0;
+    padding:0;
+    direction:rtl;
+    color:#222;
+    display:flex;
+    justify-content:center;
+  }
+  main{
+    background:#fff;
+    max-width:700px;
+    margin:40px 16px;
+    border-radius:16px;
+    padding:28px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  }
+  h1{
+    text-align:center;
+    font-size:22px;
+    margin-bottom:16px;
+    color:#4b56d2;
+  }
+  p{
+    line-height:1.9;
+    font-size:15px;
+    margin:8px 0;
+  }
+  .poll{
+    margin-top:30px;
+    border-top:1px solid #eee;
+    padding-top:20px;
+  }
+  button{
+    font-size:15px;
+    padding:10px 16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.2s;
+  }
+  .btn-yes{background:#4b56d2;color:#fff;}
+  .btn-no{background:#ddd;color:#333;}
+  button:hover{opacity:0.9;}
+  .results{
+    margin-top:16px;
+    font-size:14px;
+    background:#f7f8ff;
+    padding:10px;
+    border-radius:10px;
+  }
+  .footer{
+    text-align:center;
+    font-size:13px;
+    color:#888;
+    margin-top:20px;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>سلام</h1>
+  <p>این یک داستان شخصیه که تو همین محله اتفاق افتاد.</p>
+  <p>اسم من محمده و همیشه کار کردم بخاطر شرایط مالی. از طریق دوستم که اسمش صالحه با یکی آشنا شدم که اسمش زینب بود.</p>
+  <p>اون اول تهران بود. خبر داد که داره میاد اصفهان و اولین قرارمون تو همین کوچه بغل مهدکودک بود.</p>
+  <p>اون خانوادش سختگیر بودن پس زیاد نمی‌تونست پیشم بمونه و من چون اولین رابطه‌م بود خیلی ترسیدم. ولی خیلی هیجان و استرس داشتم.</p>
+  <p>بعد کمی صحبت وقتمون تموم شد و فقط تنها کاری کردم لپشو کشیدم!!</p>
+  <p>بعد از اون توی گوشی باهام حرف می‌زدیم و من فرصت کردم یک‌بار دیگه ببینمش :)</p>
+  <p>اما توی پارک بغل مسجد روی نیمکت نشستیم ولی من باز می‌ترسیدم بغلش کنم.</p>
+  <p>با تلفن داشت صحبت می‌کرد و من دستمو گذاشتم پشت سرش و اون خودش اومد تو بغلم (:</p>
+  <p>و بعد از ۲۰ دقیقه تو بغل هم بودیم. خواستیم خداحافظی کنیم که بغلش کردم و چندین دور روی هوا چرخش دادم (:</p>
+  <p>ولی شرایط نشد، اون رفت تهران و خانواده‌ش فهمیدن و گوشیو ازش گرفتن.</p>
+  <p>اینو که می‌نویسم 3/8/04 و فکر کنم طول می‌کشه بیاد روی سایت و QR Code!!!</p>
+  <p>یک نظرسنجی پایینش می‌ذارم، اگه خواستید کامل‌ترش رو آپدیت می‌کنم.</p>
+
+  <div class="poll">
+    <h2 style="font-size:17px;margin-bottom:10px">آیا دوست دارید این داستان ادامه پیدا کنه؟</h2>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-yes" id="yesBtn">بله ❤️</button>
+      <button class="btn-no" id="noBtn">نه، همین قشنگه</button>
+    </div>
+    <div class="results" id="results" style="display:none"></div>
+  </div>
+
+  <div class="footer">ساخته‌شده با ❤️ توسط محمد — برای خاطره زینب</div>
+</main>
+
+<script>
+  const KEY = "story_poll_v1";
+  function getVotes(){
+    const j = localStorage.getItem(KEY);
+    if(!j) return {yes:0,no:0};
+    try{return JSON.parse(j);}catch(e){return {yes:0,no:0};}
+  }
+  function setVotes(v){localStorage.setItem(KEY, JSON.stringify(v));}
+  function render(){
+    const v = getVotes();
+    const total = v.yes + v.no;
+    const pYes = total ? Math.round(v.yes*100/total) : 0;
+    const pNo  = total ? Math.round(v.no*100/total)  : 0;
+    const res = document.getElementById('results');
+    res.innerHTML = `
+      <div>تعداد کل آراء: ${total}</div>
+      <div style="margin-top:6px;">بله ❤️: ${v.yes} رأی (${pYes}%)</div>
+      <div style="height:6px;background:#ddd;border-radius:6px;overflow:hidden;margin-bottom:6px;">
+        <div style="width:${pYes}%;height:100%;background:#4b56d2;"></div>
+      </div>
+      <div>نه: ${v.no} رأی (${pNo}%)</div>
+      <div style="height:6px;background:#ddd;border-radius:6px;overflow:hidden;">
+        <div style="width:${pNo}%;height:100%;background:#999;"></div>
+      </div>`;
+    res.style.display='block';
+  }
+  document.getElementById('yesBtn').onclick = ()=>{
+    const v = getVotes(); v.yes++; setVotes(v); render();
+  };
+  document.getElementById('noBtn').onclick = ()=>{
+    const v = getVotes(); v.no++; setVotes(v); render();
+  };
+  render();
+</script>
+</body>
+</html>
